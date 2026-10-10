@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 160" width="1300" height="160" role="img" aria-label="14 seats, one long table">
+  <title>14 seats · one long table</title>
+  <line x1="20" y1="80" x2="1280" y2="80" stroke="#111111" stroke-width="6"/>
+  <line class="seg" style="--i:0" x1="66.9" y1="57.0" x2="129.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:1" x1="158.9" y1="103.0" x2="221.1" y2="57.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:2" x1="250.9" y1="57.0" x2="313.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:3" x1="342.9" y1="103.0" x2="405.1" y2="57.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:4" x1="434.9" y1="57.0" x2="497.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:5" x1="526.9" y1="103.0" x2="589.1" y2="57.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:6" x1="618.9" y1="57.0" x2="681.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:7" x1="710.9" y1="103.0" x2="773.1" y2="57.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:8" x1="802.9" y1="57.0" x2="865.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:9" x1="894.9" y1="103.0" x2="957.1" y2="57.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:10" x1="986.9" y1="57.0" x2="1049.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:11" x1="1078.9" y1="103.0" x2="1141.1" y2="57.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line class="seg" style="--i:12" x1="1170.9" y1="57.0" x2="1233.1" y2="103.0" stroke="#8C8C8C" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 10"/>
+  <line x1="687.2" y1="30.4" x2="612.8" y2="129.6" stroke="#111111" stroke-width="7"/>
+  <circle cx="52" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="144" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="236" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="328" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="420" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="512" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="604" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="696" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="788" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="880" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="972" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="1064" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="1156" cy="46" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+  <circle cx="1248" cy="114" r="11" fill="none" stroke="#111111" stroke-width="5"/>
+</svg>

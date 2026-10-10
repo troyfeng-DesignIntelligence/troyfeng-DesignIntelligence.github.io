@@ -1,0 +1,66 @@
+.page-dear-monica { --mon-green: #7b9f92; }
+.page-dear-monica .p-title, .page-dear-monica .p-open .facts, .page-dear-monica .links { grid-column: 1 / -1; }   
+.page-dear-monica .p-open .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.page-dear-monica figure img { background: #e4e9e9; }
+.page-dear-monica .mon-logo { grid-column: 1 / -1; margin-top: 36px; }
+.page-dear-monica .mon-logo img { display: block; width: auto; height: 52px; background: none; }
+.mon-film { max-width: 1120px; margin-top: 88px; }
+.mon-film video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #000; }
+.mon-film figcaption { max-width: 48em; margin-top: 12px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.mon-film figcaption b { font-weight: 500; color: var(--ink); margin-right: 6px; }
+.mon-lines { max-width: 860px; margin-top: 44px; border-top: 1px solid var(--ink); }
+.mon-lines li { border-bottom: 1px solid var(--rule); }
+.mon-lines button {
+  display: grid; grid-template-columns: 3.4em minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 20px; align-items: baseline;
+  width: 100%; padding: 9px 0 10px; border: 0; background: none; font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+.mon-lines .t, .mon-frames .t { font-size: 13.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.mon-lines .en { font-size: 17px; line-height: 1.4; }
+.mon-lines .zh, .mon-titles .zh { font: 400 14px/1.5 "Noto Sans SC", "PingFang SC", "Microsoft YaHei", var(--sans); color: var(--ink-2); }
+.mon-lines button:hover .en, .mon-lines button:focus-visible .en { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.mon-lines li.on .en, .mon-lines li.on .t { color: var(--mon-green); }
+.mon-titles { max-width: 46em; margin-top: 20px; font-size: 15px; line-height: 1.6; }
+.mon-titles .tag { margin-right: 10px; }
+.mon-titles button { padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+.mon-titles button:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.mon-titles .zh { margin-left: 4px; }
+.mon-mice { display: flex; flex-wrap: wrap; gap: 24px 56px; margin-top: 48px; }
+.page-dear-monica .mon-mice img { width: 150px; height: auto; background: none; }   
+.mon-boards { margin-top: 56px; }
+.mon-boards > div { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.mon-boards img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: #fff; }
+.mon-boards figcaption { max-width: 46em; margin-top: 12px; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.mon-refs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 32px; margin-top: 44px; }
+.mon-refs li { padding-top: 12px; border-top: 1px solid var(--ink); }
+.mon-refs b { display: block; font-weight: 500; }
+.mon-refs span { display: block; margin-top: 6px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.mon-city { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 24px; margin-top: 56px; }
+.mon-city .w { grid-column: 1 / -1; }
+.mon-city figure img { display: block; width: 100%; height: auto; }
+.mon-paintings { margin-top: 48px; }
+.mon-paintings > div { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.mon-paintings img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.mon-paintings figcaption { margin-top: 8px; font-size: 13px; line-height: 1.4; color: var(--ink-2); }
+.mon-paintings figcaption b { display: block; font-weight: 500; color: var(--ink); }
+.mon-paintings .note { max-width: 46em; margin-top: 16px; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.mon-frames { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; margin-top: 48px; }
+.mon-frames img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.mon-frames .t { display: block; margin-bottom: 2px; }
+@media (max-width: 1000px) {
+  .page-dear-monica .p-open .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mon-refs { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .mon-frames { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .page-dear-monica .p-open .facts { grid-template-columns: minmax(0, 1fr); }
+  .mon-film { margin-top: 56px; }
+}
+@media (max-width: 640px) {
+  .mon-lines button { grid-template-columns: 3.4em minmax(0, 1fr); row-gap: 2px; }
+  .mon-lines .zh { grid-column: 2; }
+  .mon-mice { gap: 16px 32px; }
+  .page-dear-monica .mon-mice img { width: 110px; }
+  .mon-boards > div { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .mon-paintings > div { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .mon-city, .mon-frames { grid-template-columns: minmax(0, 1fr); }
+}

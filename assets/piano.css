@@ -1,0 +1,56 @@
+.page-piano-wharf { --pw-paper: #f4f3ef; }
+.page-piano-wharf .p-title, .page-piano-wharf .p-open .facts { grid-column: 1 / -1; }      
+.page-piano-wharf .p-open .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.page-piano-wharf .act figure img { display: block; width: 100%; height: auto; background: var(--pw-paper); border: 1px solid var(--rule); }
+.page-piano-wharf .act figcaption { max-width: 48em; margin-top: 10px; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.page-piano-wharf .act figcaption b { font-weight: 500; color: var(--ink); margin-right: 6px; }
+.pw-note { max-width: 40em; margin-top: 28px; font-size: 15px; line-height: 1.6; }
+.pw-film { display: grid; grid-template-columns: minmax(0, 1fr) 260px; column-gap: var(--gap); align-items: end; margin-top: 64px; }
+.pw-film video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--pw-paper); border: 1px solid var(--rule); }
+.pw-film figcaption { max-width: 48em; margin-top: 12px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.pw-film figcaption b { font-weight: 500; color: var(--ink); margin-right: 6px; }
+.pw-film-side .chapters { margin-top: 8px; border-top: 1px solid var(--rule); }
+.pw-film-side .chapters li { border-bottom: 1px solid var(--rule); }
+.pw-film-side .chapters button { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 10px; width: 100%; padding: 8px 0 9px;
+  border: 0; background: none; font: 400 14px/1.35 var(--sans); color: var(--ink-2); text-align: left; cursor: pointer; }
+.pw-film-side .chapters .t { color: var(--ink); font-variant-numeric: tabular-nums; }
+.pw-film-side .chapters button:hover span:last-child { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.pw-film-side .chapters li.on button span { color: var(--ink); font-weight: 500; }
+.pw-readings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 32px; max-width: 980px; margin-top: 36px; }
+.pw-readings li { padding-top: 12px; border-top: 1px solid var(--ink); font-size: 15px; line-height: 1.5; }
+.pw-readings li b { display: block; font-weight: 500; }
+.pw-readings li span { display: block; margin-top: 4px; }
+.pw-readings li .by { font-size: 13.5px; color: var(--ink-2); }
+.pw-type { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); column-gap: var(--gap); align-items: start; margin-top: 56px; }
+.pw-type .pw-note { margin-top: 0; }
+.pw-map { max-width: 980px; margin-top: 44px; }
+.pw-map li { display: grid; grid-template-columns: 9em 8em minmax(0, 1fr); column-gap: 20px; padding: 9px 0 10px; border-top: 1px solid var(--rule); font-size: 15px; line-height: 1.5; }
+.pw-map li:last-child { border-bottom: 1px solid var(--rule); }
+.pw-map li b { font-weight: 500; }
+.pw-map li .rng { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.pw-iter { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px 20px; margin-top: 44px; }
+.pw-iter li img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: #0a1628; }
+.pw-iter li b { display: block; margin-top: 10px; font-size: 15px; font-weight: 500; }
+.pw-iter li p { margin-top: 4px; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.pw-site { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 44px; }
+.pw-site .w { grid-column: 1 / -1; }
+.page-piano-wharf .pw-site img { border: 0; background: #e4e9e9; }
+@media (max-width: 1000px) {
+  .page-piano-wharf .p-open .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pw-iter { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .page-piano-wharf .p-open .facts { grid-template-columns: minmax(0, 1fr); }
+  .pw-readings { grid-template-columns: minmax(0, 1fr); }
+  .pw-film { grid-template-columns: minmax(0, 1fr); row-gap: 20px; margin-top: 48px; }
+  .pw-map li { grid-template-columns: 9em minmax(0, 1fr); }
+  .pw-map li span:last-child { grid-column: 2; }
+  .pw-site { grid-template-columns: minmax(0, 1fr); }
+  .pw-type { grid-template-columns: minmax(0, 1fr); row-gap: 24px; }
+  .pw-type .pw-poster { max-width: 340px; }
+}
+@media (max-width: 640px) {
+  .pw-iter { grid-template-columns: minmax(0, 1fr); }
+  .pw-map li { grid-template-columns: minmax(0, 1fr); row-gap: 2px; }
+  .pw-map li span:last-child { grid-column: 1; }
+}
