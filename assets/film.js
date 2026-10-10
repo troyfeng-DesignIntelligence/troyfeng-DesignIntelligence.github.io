@@ -28,6 +28,7 @@
       for (const b of chapters) b.parentElement.classList.toggle('on', b === on && !video.paused);
     };
     video.addEventListener('timeupdate', mark);
+    video.addEventListener('seeking', mark);   
     video.addEventListener('pause', mark);
     video.addEventListener('play', mark);
   }
