@@ -1,4 +1,4 @@
-.page-the-agent-became-me { --accent: #3443C4; --wash: #E6E8F6; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; }
+.page-the-agent-became-me { --accent: #3443C4; --wash: #E6E8F6; --serif: "Source Serif 4", Georgia, "Times New Roman", var(--cjk-serif), serif; }
 .page-the-agent-became-me .act-head h2 { font: 400 clamp(30px, 3.3vw, 46px)/1.12 var(--serif); letter-spacing: -.01em; }
 .page-the-agent-became-me .act-head .label { font: italic 400 20px/1 var(--serif); color: var(--accent); padding-top: .9em; }
 .page-the-agent-became-me .act-head .label span { margin: 0; }

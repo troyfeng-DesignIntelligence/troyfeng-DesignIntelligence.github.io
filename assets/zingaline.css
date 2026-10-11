@@ -1,4 +1,4 @@
-.page-zingaline { --blue: #4c6db3; --lime: #d5e72f; --big: #3c4041; --soft: #535b5c; --mono: "Chivo Mono", "Noto Sans SC", Consolas, monospace; }
+.page-zingaline { --blue: #4c6db3; --lime: #d5e72f; --big: #3c4041; --soft: #535b5c; --mono: "Chivo Mono", "Noto Sans SC", var(--cjk), Consolas, monospace; }
 .page-zingaline .project > .act, .page-zingaline .zg-cover, .page-zingaline .zg-film { font-family: var(--mono); }
 .page-zingaline .act-head h2 { font: 700 clamp(24px, 2.4vw, 34px)/1.2 var(--mono); letter-spacing: -.025em; max-width: 24em; }
 .page-zingaline .act-head .label { font: 400 14px/1 var(--mono); color: var(--soft); letter-spacing: .08em; text-transform: uppercase; }
@@ -147,3 +147,4 @@
   .zg-lines li { grid-template-columns: minmax(0, 1fr); }
   .zg-lines .en, .zg-lines .zh, .zg-lines .n { grid-column: 1; }
 }
+html:lang(zh) .zg-q > .zh, html:lang(zh) .zg-q8 li i, html:lang(zh) .zg-lines .zh { display: none; }

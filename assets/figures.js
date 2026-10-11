@@ -88,7 +88,7 @@
     const layer = make('g');
     const person = make('circle', 'person');
     const tag = make('text', 'tag field-tag');
-    tag.textContent = 'a person';
+    tag.textContent = (document.querySelector('.hero .tag') || {}).textContent || 'a person';   
     field.append(layer, person, tag);
     document.body.append(field);
     const figs = items.map(li => {

@@ -27,7 +27,9 @@
     cur = i;
     btn.querySelector('span').textContent = links[i].querySelector('span').textContent;
     btn.querySelector('b').textContent = links[i].querySelector('b').textContent;
-    btn.setAttribute('aria-label', `Chapter ${links[i].textContent.trim()}: show all chapters`);
+    const no = links[i].querySelector('span').textContent, name = links[i].querySelector('b').textContent;
+    btn.setAttribute('aria-label', document.documentElement.lang.startsWith('zh')
+      ? `第 ${no} 章，${name}：展开全部章节` : `Chapter ${no}, ${name}: show all chapters`);
     items.forEach((a, j) => a.classList.toggle('on', j === i));
   };
   const close = () => { chip.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };

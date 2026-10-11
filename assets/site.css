@@ -3,8 +3,10 @@
   --ink: #101314;
   --ink-2: #566063;
   --rule: #b4bdbe;
-  --sans: "Funnel Sans", Arial, sans-serif;
-  --display: "Funnel Display", "Funnel Sans", Arial, sans-serif;
+  --cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", "Noto Sans CJK SC";
+  --cjk-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "Noto Serif CJK SC", var(--cjk);
+  --sans: "Funnel Sans", Arial, var(--cjk), sans-serif;
+  --display: "Funnel Display", "Funnel Sans", Arial, var(--cjk), sans-serif;
   --margin: 64px;
   --gap: 56px;
   --inset: max(var(--margin), calc((100vw - 1440px) / 2 + var(--margin)));   
@@ -35,9 +37,13 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 6px; }
   padding-top: 28px;
 }
 .page-home .top { position: fixed; top: 0; left: 0; right: 0; z-index: 3; }   
-.who { font: 500 16px/1.5 var(--sans); }
+.who { font: 500 16px/1.5 var(--sans); white-space: nowrap; }
+.top li { white-space: nowrap; }                
 .who span { margin-left: 14px; font-weight: 400; color: var(--ink-2); }
 .top ul { display: flex; gap: 28px; }
+.top .lang { display: flex; align-items: baseline; color: var(--ink-2); }      
+.top .lang b { font-weight: inherit; color: var(--ink); }
+.top .lang :last-child::before { content: "/"; display: inline-block; margin: 0 .42em; color: var(--rule); }
 .top a:hover, .bottom a:hover, .next:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .bottom {
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px;
@@ -266,7 +272,9 @@ html:not(.js-stages) .stage { display: none; }
   body { font-size: 15px; }
   .top { padding-top: 18px; }
   .who span { display: none; }
-  .top ul { gap: 18px; }
+  .top { gap: 12px; }
+  .top ul { gap: 2px 14px; flex-wrap: wrap; justify-content: flex-end; }   
+  .top .lang b, .top .lang :last-child::before { display: none; }   
   .next { right: auto; left: var(--inset); }
   .list a { font-size: 28px; }
   .others { margin-top: 112px; }
@@ -349,3 +357,7 @@ html:not(.js-stages) .stage { display: none; }
   .toc ol { flex-direction: column; gap: 0; }
   .toc-now { left: var(--margin); bottom: 14px; }
 }
+html:lang(zh) { font-synthesis: weight; }               
+html:lang(zh) :is(.p-title h1, .a-open h1) { line-height: 1.12; letter-spacing: -.01em; }
+html:lang(zh) :is(.act-head h2, .beat h2, .cap .nm, .others h2, .p-next .nm, .stages .list a) { line-height: 1.24; letter-spacing: 0; }
+html:lang(zh) :is(.lede, .act p, .beat p, .a-row, .limits li, .ai p, .facts dd) { line-height: 1.75; }

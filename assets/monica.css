@@ -24,6 +24,11 @@
 .mon-titles button { padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
 .mon-titles button:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .mon-titles .zh { margin-left: 4px; }
+html:lang(zh) .mon-lines .en { display: none; }
+html:lang(zh) .mon-lines button { grid-template-columns: 3.4em minmax(0, 1fr); }
+html:lang(zh) .mon-lines .zh { font-size: 17px; line-height: 1.45; color: var(--ink); }
+html:lang(zh) .mon-lines li.on .zh { color: var(--mon-green); }
+html:lang(zh) .mon-lines button:hover .zh, html:lang(zh) .mon-lines button:focus-visible .zh { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .mon-mice { display: flex; flex-wrap: wrap; gap: 24px 56px; margin-top: 48px; }
 .page-dear-monica .mon-mice img { width: 150px; height: auto; background: none; }   
 .mon-boards { margin-top: 56px; }
