@@ -191,9 +191,9 @@
   .net .card.theme { margin-top: 18px; }
   .net .hub, .net .card.venue, .net .key { margin-top: 24px; }
   .lens, .exits, .effects, .checked { grid-template-columns: minmax(0, 1fr); }
-  .lens h3, .lens .note, .lens-fig, .exits h3, .exits ul, .exits-shot, .effects h3, .effects .note, .env, .rules,
+  .lens h3, .lens .note, .lens-fig, .skeleton, .exits h3, .exits ul, .exits-shot, .effects h3, .effects .note, .env, .rules,
   .checked h3, .checked .tests, .checked .plan, .checked .found, .checked .note, .checked .review { grid-column: 1; grid-row: auto; }
-  .lens-fig, .exits-shot { margin-top: 32px; }
+  .lens-fig, .skeleton, .exits-shot { margin-top: 32px; }
   .checked .review { margin-top: 32px; justify-self: start; }
   .rules { margin-top: 24px; }
   .ver-row { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }

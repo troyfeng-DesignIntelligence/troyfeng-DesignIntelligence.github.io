@@ -122,9 +122,11 @@
       const [x, y] = pts[pts.length - 1];
       return [(r.width - vw * s) / 2 + x * s, (r.height - vh * s) / 2 + y * s];
     }
+    
+    const screenH = () => stage.offsetHeight || innerHeight;
     function layout() {
       W = root.clientWidth;
-      H = innerHeight;
+      H = screenH();
       field.setAttribute('width', W);
       field.setAttribute('height', H);
       field.setAttribute('viewBox', `0 0 ${W} ${H}`);
@@ -248,7 +250,10 @@
       setTimeout(reveal, 7000);                           // in case the animation never reports back
     }
     addEventListener('scroll', () => { if (scrollY > 0) reveal(); wake(); }, { passive: true });
-    addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(() => { layout(); wake(); }, 120); });
+    addEventListener('resize', () => {                  // a phone's sliding toolbar resizes the window too: that changes nothing here
+      clearTimeout(timer);
+      timer = setTimeout(() => { if (root.clientWidth !== W || screenH() !== H) { layout(); wake(); } }, 120);
+    });
     marks.forEach((m, j) => m.addEventListener('click', () =>
       scrollTo({ top: top + j * segPx, behavior: still ? 'instant' : 'smooth' })));
     return true;

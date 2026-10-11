@@ -44,5 +44,13 @@
   <p><a href="mailto:troyfeng50@gmail.com">troyfeng50@gmail.com</a><a href="https://github.com/troyfeng-DesignIntelligence">GitHub</a></p>
   <p>冯恺琦，2026</p>
 </footer>
+<script>/* sizes="auto" where the browser lacks it (Safari, Firefox): a lazy image not yet fetched takes the width it is drawn at,
+   which with object-fit: cover can be wider than its box */
+for (const i of document.querySelectorAll('img[srcset][loading="lazy"]')) {
+  const r = i.getBoundingClientRect(), w = +i.getAttribute('width'), h = +i.getAttribute('height');
+  if (r.width <= 1 || i.currentSrc) continue;
+  const cover = w && h && getComputedStyle(i).objectFit === 'cover' ? Math.max(1, r.height / r.width * w / h) : 1;
+  i.sizes = Math.ceil(r.width * cover) + 'px';
+}</script>
 </body>
 </html>

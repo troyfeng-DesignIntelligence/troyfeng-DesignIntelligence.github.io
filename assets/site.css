@@ -20,6 +20,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font: 400 16px/1.5 var(--sans);
+  overflow-wrap: break-word;                   
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -36,14 +37,16 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 6px; }
   display: flex; justify-content: space-between; align-items: baseline; gap: 24px;
   padding-top: 28px;
 }
-.page-home .top { position: fixed; top: 0; left: 0; right: 0; z-index: 3; }   
-.who { font: 500 16px/1.5 var(--sans); white-space: nowrap; }
-.top li { white-space: nowrap; }                
+.page-home .top { position: fixed; top: 0; left: 0; right: 0; z-index: 3; padding-bottom: 14px; background: var(--paper); }
+.who { font: 500 16px/1.5 var(--sans); }
+.top .who, .top li { white-space: nowrap; }     
 .who span { margin-left: 14px; font-weight: 400; color: var(--ink-2); }
 .top ul { display: flex; gap: 28px; }
 .top .lang { display: flex; align-items: baseline; color: var(--ink-2); }      
 .top .lang b { font-weight: inherit; color: var(--ink); }
 .top .lang :last-child::before { content: "/"; display: inline-block; margin: 0 .42em; color: var(--rule); }
+.top a, .bottom a, .next, .links a { padding: 10px 4px; margin: -10px -4px; }   
+:is(.top, .bottom, .links) a:focus-visible, .next:focus-visible { outline-offset: -4px; }   
 .top a:hover, .bottom a:hover, .next:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .bottom {
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px;
@@ -52,7 +55,7 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 6px; }
 }
 .bottom p:first-child { display: flex; gap: 20px; }
 .page-home main { position: relative; z-index: 1; }
-.hero { position: relative; min-height: 100svh; overflow: hidden; }
+.hero { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; }
 .hero .art { position: absolute; inset: 0; display: block; width: 100%; height: 100%; pointer-events: none; }
 .hero-line .port { display: none; }
 .ink-line {
@@ -75,7 +78,7 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 6px; }
 @keyframes appear { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
 @keyframes fade { to { opacity: 1; } }
 .stages { position: relative; }
-.stage { position: sticky; top: 0; height: 100svh; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; }   
 html.js-stages { scroll-snap-type: y proximity; }              
 .js-stages .hero { scroll-snap-align: start; }
 .snap { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; pointer-events: none; }
@@ -115,7 +118,7 @@ html:not(.js-stages) .stage { display: none; }
 .marks button.on::before { background: var(--ink); transform: scale(1.25); }
 .marks button:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 2px; border-radius: 50%; }
 .index {
-  position: relative; min-height: 100svh;
+  position: relative; min-height: 100vh; min-height: 100svh;
   display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: var(--gap);
   align-items: center; padding-top: 96px; padding-bottom: 96px;
 }
@@ -225,6 +228,7 @@ html:not(.js-stages) .stage { display: none; }
 .a-row .what b { display: block; font-weight: 500; }
 .a-row .what > span { display: block; max-width: 40em; margin-top: 4px; color: var(--ink-2); }
 .a-row .what a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.a-row .what > a { padding: 10px 0; margin: -10px 0; }   
 #personal .what b { font-weight: 400; max-width: 40em; }
 .a-row p .go { font-weight: 500; padding-top: 12px; display: inline-block; }
 .a-row p .go span { display: inline-block; transition: transform var(--ease); }
@@ -285,6 +289,9 @@ html:not(.js-stages) .stage { display: none; }
   .hero .legend { bottom: 64px; right: var(--inset); max-width: none; font-size: 14px; }
   .bottom { margin-top: 112px; }
 }
+@media (pointer: coarse) {
+  [data-film] .chapters button[data-t] { padding-top: 6px; padding-bottom: 6px; }   
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .ink-line { animation: none; stroke-dashoffset: 0; }
@@ -333,8 +340,9 @@ html:not(.js-stages) .stage { display: none; }
 .toc a b { font-size: 17px; }
 .toc a:hover b, .toc-now a:hover b { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .act, .beat, .fpd-ws, .fpd-place { scroll-margin-top: 24px; }
-.toc-now { position: fixed; left: var(--inset); bottom: 24px; z-index: 3; opacity: 0; pointer-events: none; transition: opacity .3s ease-out; }
+.toc-now { position: fixed; left: var(--inset); bottom: 24px; z-index: 3; opacity: 0; pointer-events: none; transition: opacity .3s ease-out, transform .3s ease-out; }
 .toc-now.on { opacity: 1; pointer-events: auto; }
+.toc-now.on.tuck { opacity: 0; pointer-events: none; transform: translateY(10px); }   
 .toc-now button {
   display: inline-flex; align-items: baseline; gap: 9px; padding: 7px 14px 8px; border: 1px solid var(--rule); border-radius: 999px;
   background: var(--paper); color: var(--ink); font: 400 14px/1.2 var(--sans); cursor: pointer;

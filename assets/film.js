@@ -3,14 +3,26 @@
     const video = box.querySelector('video');
     if (!video) continue;
     if (video.autoplay && matchMedia('(prefers-reduced-motion: reduce)').matches) { video.autoplay = false; video.removeAttribute('autoplay'); video.pause(); }
+    if (video.hasAttribute('data-autoplay') && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches
+        && !(navigator.connection && navigator.connection.saveData)) {
+      let want = false, theirs = false;
+      video.addEventListener('pause', () => { if (want && !video.ended) theirs = true; });
+      video.addEventListener('volumechange', () => { if (!video.muted) theirs = true; });
+      new IntersectionObserver(([e]) => {
+        if (theirs) return;
+        want = e.isIntersecting;
+        if (want) video.play().catch(() => {}); else video.pause();
+      }, { threshold: 0.4 }).observe(video);
+    }
     const langs = [...box.querySelectorAll('button[data-src]')];
     for (const b of langs) {
       b.addEventListener('click', () => {
         if (b.classList.contains('on')) return;
         const at = video.currentTime, playing = !video.paused && !video.ended;
         video.src = b.dataset.src;
-        video.addEventListener('loadedmetadata', () => { video.currentTime = at; if (playing) video.play(); }, { once: true });
+        video.addEventListener('loadedmetadata', () => { video.currentTime = at; }, { once: true });
         video.load();
+        if (playing) video.play();                 
         for (const x of langs) x.classList.toggle('on', x === b);
       });
     }

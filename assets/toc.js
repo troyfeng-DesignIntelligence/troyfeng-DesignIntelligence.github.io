@@ -41,9 +41,14 @@
   items.forEach(a => a.addEventListener('click', close));
   document.addEventListener('click', e => { if (!chip.contains(e.target)) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  let raf = 0;
+  // On a phone the chip sits over the text: it steps aside while the reader scrolls down and comes back on the way up.
+  const narrow = matchMedia('(max-width: 900px)');
+  let raf = 0, lastY = scrollY, tuck = false;
   const frame = () => {
     raf = 0;
+    const dy = scrollY - lastY;
+    if (Math.abs(dy) > 8) { tuck = dy > 0 && narrow.matches; lastY = scrollY; }
+    chip.classList.toggle('tuck', tuck && !chip.classList.contains('open'));
     const line = innerHeight * 0.35;
     let i = -1;
     acts.forEach((s, j) => { if (s.getBoundingClientRect().top < line) i = j; });
