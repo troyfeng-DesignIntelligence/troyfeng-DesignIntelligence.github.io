@@ -9,6 +9,7 @@
   const easeInOut = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const backOut = t => 1 + 2.3 * Math.pow(t - 1, 3) + 1.3 * Math.pow(t - 1, 2);   // settles after a small overshoot
   const linear = t => t;
+  const EASE = { in: easeIn, out: easeOut, inout: easeInOut };
   const f1 = n => n.toFixed(1);
   const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   const make = (name, cls) => {
@@ -39,15 +40,16 @@
           continue;
         }
         if (m === 'slide') { lines.push({ node, kind: m, at, dx: px - x, dy: py - y }); continue; }
+        if (m === 'pop') { lines.push({ node, kind: m, at }); continue; }
         points.push({ node, d: Math.hypot(x - px, y - py) });
         if (m === 'fill') lines.push({ node, kind: m, at, r });
-      } else if (m === 'drop' || m === 'pop') {
+      } else if (m === 'drop' || m === 'pop' || m === 'open') {
         lines.push({ node, kind: m, at });
       } else {
         node.setAttribute('pathLength', '1');
         const dashed = node.hasAttribute('stroke-dasharray');   // dotted lines fade in instead of drawing
         if (!dashed) node.style.strokeDasharray = '1 1';
-        lines.push({ node, kind: 'line', dashed, at });
+        lines.push({ node, kind: 'line', dashed, at, ease: EASE[node.dataset.ease] || linear });
       }
     }
     const free = lines.filter(l => !l.at), M = free.length, w = Math.min(1, 2.2 / Math.max(1, M));
@@ -101,24 +103,24 @@
           n.style.opacity = t > 0 ? '1' : '0';
           break;
         }
-        case 'drop': case 'pop': {
+        case 'drop': case 'pop': case 'open': {
           if (!l.c) {                                       // a hidden figure has no box yet (Firefox throws): try again later
             let b = null;
             try { b = n.getBBox(); } catch (_) {  }
             if (!b || !b.width) break;
             l.c = [b.x + b.width / 2, b.y + b.height / 2];
           }
-          const s = (t > 0 ? backOut(t) : 0).toFixed(3);
-          n.setAttribute('transform', l.kind === 'drop'
-            ? `translate(0 ${l.c[1]}) scale(1 ${s}) translate(0 ${-l.c[1]})`
+          const s = (t > 0 ? (l.kind === 'open' ? easeOut(t) : backOut(t)) : 0).toFixed(3);
+          n.setAttribute('transform', l.kind === 'drop' ? `translate(0 ${l.c[1]}) scale(1 ${s}) translate(0 ${-l.c[1]})`
+            : l.kind === 'open' ? `translate(${l.c[0]} 0) scale(${s} 1) translate(${-l.c[0]} 0)`
             : `translate(${l.c[0]} ${l.c[1]}) scale(${s}) translate(${-l.c[0]} ${-l.c[1]})`);
-          n.style.opacity = t > 0 ? '1' : '0';
+          n.style.opacity = l.kind === 'open' ? String(clamp(t * 2)) : t > 0 ? '1' : '0';
           break;
         }
         default:
           if (l.dashed) n.style.opacity = String(t);
           else {
-            n.style.strokeDashoffset = String(1 - t);
+            n.style.strokeDashoffset = String(1 - l.ease(t));
             n.style.opacity = t > 0 ? '1' : '0';           // a zero-length dash with round caps would show as a dot
           }
       }
