@@ -20,18 +20,38 @@
   function prepare(group, [px, py]) {
     const points = [], lines = [], strokes = [];
     for (const node of [...group.children]) {
+      const m = node.dataset.m || '';
+      const at = node.dataset.at ? node.dataset.at.trim().split(/\s+/).map(Number) : null;
+      if (m === 'fill') {                                // arrives as an outline, fills in later
+        node.setAttribute('stroke', 'currentColor');
+        node.setAttribute('stroke-width', '1');
+      }
       if (node.getAttribute('stroke')) strokes.push({ node, sw: parseFloat(node.getAttribute('stroke-width') || 1) });
       if (node.tagName === 'circle') {
-        const x = +node.getAttribute('cx'), y = +node.getAttribute('cy');
+        const x = +node.getAttribute('cx'), y = +node.getAttribute('cy'), r = +node.getAttribute('r');
         if (Math.hypot(x - px, y - py) < 1 && node.getAttribute('fill') !== 'none') { node.remove(); continue; }
+        if (m === 'grow') { lines.push({ node, kind: m, at, r }); continue; }
+        if (m === 'orbit') {
+          const [cx, cy, rx, ry, rot, sweep] = node.dataset.orbit.trim().split(/\s+/).map(Number);
+          const a = rot * Math.PI / 180, dx = x - cx, dy = y - cy;
+          const lx = dx * Math.cos(a) + dy * Math.sin(a), ly = -dx * Math.sin(a) + dy * Math.cos(a);
+          lines.push({ node, kind: m, at, cx, cy, rx, ry, rot: a, sweep: sweep * Math.PI / 180, th: Math.atan2(ly / ry, lx / rx) });
+          continue;
+        }
+        if (m === 'slide') { lines.push({ node, kind: m, at, dx: px - x, dy: py - y }); continue; }
         points.push({ node, d: Math.hypot(x - px, y - py) });
+        if (m === 'fill') lines.push({ node, kind: m, at, r });
+      } else if (m === 'drop' || m === 'pop') {
+        lines.push({ node, kind: m, at });
       } else {
         node.setAttribute('pathLength', '1');
         const dashed = node.hasAttribute('stroke-dasharray');   // dotted lines fade in instead of drawing
         if (!dashed) node.style.strokeDasharray = '1 1';
-        lines.push({ node, dashed });
+        lines.push({ node, kind: 'line', dashed, at });
       }
     }
+    const free = lines.filter(l => !l.at), M = free.length, w = Math.min(1, 2.2 / Math.max(1, M));
+    free.forEach((l, j) => { l.at = [M > 1 ? (1 - w) * j / (M - 1) : 0, w]; });
     const far = Math.max(1, ...points.map(p => p.d));
     points.forEach(p => { p.d /= far; });
     return { points, lines, strokes, px, py, e: 0, d: 0, on: 0, over: false, lastE: -1, lastD: -1 };
@@ -56,16 +76,53 @@
   function setDraw(fig, d) {
     if (Math.abs(d - fig.lastD) < 1e-3) return;
     fig.lastD = d;
-    const M = fig.lines.length, w = Math.min(1, 2.2 / M);
-    fig.lines.forEach((l, j) => {
-      const start = M > 1 ? (1 - w) * j / (M - 1) : 0;
-      const t = clamp((d - start) / w);
-      if (l.dashed) l.node.style.opacity = String(t);
-      else {
-        l.node.style.strokeDashoffset = String(1 - t);
-        l.node.style.opacity = t > 0 ? '1' : '0';       // a zero-length dash with round caps would show as a dot
+    for (const l of fig.lines) {
+      const t = clamp((d - l.at[0]) / l.at[1]), n = l.node;
+      switch (l.kind) {
+        case 'grow':
+          n.setAttribute('r', (l.r * easeOut(t)).toFixed(2));
+          n.style.opacity = t > 0 ? '1' : '0';
+          break;
+        case 'fill':
+          n.setAttribute('r', (l.r - 0.5 + 0.5 * t).toFixed(2));
+          n.style.fillOpacity = String(easeOut(t));
+          break;
+        case 'orbit': {
+          const th = l.th - l.sweep * (1 - easeOut(t));
+          const lx = l.rx * Math.cos(th), ly = l.ry * Math.sin(th);
+          n.setAttribute('cx', f1(l.cx + lx * Math.cos(l.rot) - ly * Math.sin(l.rot)));
+          n.setAttribute('cy', f1(l.cy + lx * Math.sin(l.rot) + ly * Math.cos(l.rot)));
+          n.style.opacity = String(clamp(t * 5));
+          break;
+        }
+        case 'slide': {
+          const u = 1 - easeInOut(t);
+          n.setAttribute('transform', `translate(${f1(l.dx * u)} ${f1(l.dy * u)})`);
+          n.style.opacity = t > 0 ? '1' : '0';
+          break;
+        }
+        case 'drop': case 'pop': {
+          if (!l.c) {                                       // a hidden figure has no box yet (Firefox throws): try again later
+            let b = null;
+            try { b = n.getBBox(); } catch (_) {  }
+            if (!b || !b.width) break;
+            l.c = [b.x + b.width / 2, b.y + b.height / 2];
+          }
+          const s = (t > 0 ? backOut(t) : 0).toFixed(3);
+          n.setAttribute('transform', l.kind === 'drop'
+            ? `translate(0 ${l.c[1]}) scale(1 ${s}) translate(0 ${-l.c[1]})`
+            : `translate(${l.c[0]} ${l.c[1]}) scale(${s}) translate(${-l.c[0]} ${-l.c[1]})`);
+          n.style.opacity = t > 0 ? '1' : '0';
+          break;
+        }
+        default:
+          if (l.dashed) n.style.opacity = String(t);
+          else {
+            n.style.strokeDashoffset = String(1 - t);
+            n.style.opacity = t > 0 ? '1' : '0';           // a zero-length dash with round caps would show as a dot
+          }
       }
-    });
+    }
   }
   
   function stages() {
@@ -98,6 +155,7 @@
       const fig = prepare(g, JSON.parse(li.dataset.person));
       fig.g = g;
       fig.box = JSON.parse(li.dataset.box);
+      fig.drawMs = +li.querySelector('.fig').dataset.draw || T.draw;
       setBurst(fig, 0, false);
       setDraw(fig, 0);
       return fig;
@@ -172,7 +230,7 @@
       if (travel) tween('person', 0, 1, now + 120, T.travel, easeInOut, t => { P = lerp(from, to, t); });
       const t1 = now + (travel ? 120 + travel * 0.75 : 60);
       tween(`e${i}`, f.e, 1, t1, T.burst, linear, v => { f.e = v; });          // the stagger lives in setBurst
-      tween(`d${i}`, f.d, 1, t1 + 420, T.draw, linear, v => { f.d = v; });
+      tween(`d${i}`, f.d, 1, t1 + 420, f.drawMs, linear, v => { f.d = v; });
       tween(`c${i}`, f.on, 1, t1 + 200, T.cap, easeOut, v => { f.on = v; });
       if (still) {
         tweens.clear();
